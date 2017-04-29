@@ -115,3 +115,66 @@ Public Class MainForm
         ' minimize code
     End Sub
 End Class
+Public Class PostProcessor
+
+    Public Shared Function getPercentageMinimized(ByVal minimized As DataTable, ByVal table As DataTable) As Double
+        Return ((minimized.Columns.Count / table.Columns.Count) _
+                    * 100)
+    End Function
+
+    Public Shared Function getRules(ByVal minimized As DataTable, ByVal table As DataTable) As HashSet(Of String)
+        Dim RULES1 = New HashSet(Of String)
+        Dim Di = New HashSet(Of String)
+        For Each row As DataRow In minimized.Rows
+            Di.Add(row((minimized.Columns.Count - 1)).ToString)
+        Next
+        Dim DiIndex = New List(Of List(Of Integer))
+        'Contains the Index of Different Diseases
+        For Each dis As String In Di
+            Dim ind = New List(Of Integer)
+            For Each row As DataRow In minimized.Rows
+                If row((minimized.Columns.Count - 1)).ToString.Equals(dis) Then
+                    ind.Add(CType(row(0), Integer))
+                End If
+
+            Next
+            DiIndex.Add(ind)
+        Next
+        For Each ind As List(Of Integer) In DiIndex
+            Dim rules = New List(Of List(Of String))
+            Dim R As String = ""
+            For Each i As Integer In ind
+                Dim rul = New List(Of String)
+                Dim col As Integer = 1
+                Do While (col _
+                            < (minimized.Columns.Count - 1))
+                    rul.Add(minimized.Rows((i - 1))(col).ToString)
+                    col = (col + 1)
+                Loop
+
+                Dim isToAdd As Boolean = True
+                For Each list As List(Of String) In rules
+                    If list.SequenceEqual(rul) Then
+                        isToAdd = False
+                    End If
+
+                    Exit For
+                Next
+                If isToAdd Then
+                    rules.Add(rul)
+                End If
+
+            Next
+            For Each list As List(Of String) In rules
+                R = ""
+                For Each ele As String In list
+                    R = (R _
+                                + (ele + " & "))
+                Next
+                R = (R + "  => ")
+                RULES1.Add(R)
+            Next
+        Next
+        Return RULES1
+    End Function
+End Class
