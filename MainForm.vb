@@ -112,7 +112,8 @@ Public Class MainForm
     End Sub
 
     Private Sub cont_button_Click(sender As Object, e As EventArgs) Handles cont_button.Click
-        ' minimize code
+        Me.Hide()
+        FunctionsForm.Show()
     End Sub
 End Class
 Public Class PostProcessor
