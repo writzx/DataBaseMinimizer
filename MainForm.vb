@@ -36,6 +36,8 @@ Public Class MainForm
                 ElseIf si.Text = "Train" Then
                     si.Text = "Test"
                 ElseIf si.Text = "Test" Then
+                    si.Text = "Train and Test"
+                ElseIf si.Text = "Train and Test" Then
                     si.Text = " "
                 End If
             End If
@@ -113,8 +115,45 @@ Public Class MainForm
 
     Private Sub cont_button_Click(sender As Object, e As EventArgs) Handles cont_button.Click
         Me.Hide()
+        For Each t As ListViewItem In table_list.Items
+            If t.SubItems(1).Text = "Train and Test" Then
+                Dim x = DivideList(tbl_list(t.Index), 0.7)
+            End If
+        Next
         FunctionsForm.Show()
     End Sub
+
+    Function DivideList(ByVal t As DataTable, trainRatio As Double) As (train As DataTable, test As DataTable)
+        Dim train = t.Clone
+        Dim test = t.Clone
+        Dim s As DataRow() = t.Select.Clone
+        Shuffle(s)
+        For i = 0 To s.Length - 1
+            If (i / s.Length) <= trainRatio Then
+                train.Rows.Add(s(i).ItemArray)
+            Else
+                test.Rows.Add(s(i).ItemArray)
+            End If
+        Next
+        Return (train, test)
+    End Function
+
+    Private rng As New Random()
+
+    Public Sub Shuffle(Of T)(items As T())
+        Dim temp As T
+        Dim j As Int32
+
+        For i As Int32 = items.Count - 1 To 0 Step -1
+            ' Pick an item for position i.
+            j = rng.Next(i + 1)
+            ' Swap 
+            temp = items(i)
+            items(i) = items(j)
+            items(j) = temp
+        Next i
+    End Sub
+
 End Class
 Public Class PostProcessor
 

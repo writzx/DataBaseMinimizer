@@ -64,8 +64,12 @@
         Return result
     End Function
 
-    <Runtime.CompilerServices.Extension>
+    <System.Runtime.CompilerServices.Extension>
     Public Function PowerSets(Of T)(list As List(Of T)) As List(Of List(Of T))
-        Return (From m In Enumerable.Range(0, 1 << list.Count)(From i In Enumerable.Range(0, list.Count) Where (m And (1 << i)) <> 0List(i)).ToList()).OrderByDescending(Function(x) x.Count).ToList()
-	End Function
+        Return (From m In Enumerable.Range(0, 1 << list.Count)
+                Select
+                    (From i In Enumerable.Range(0, list.Count)
+                     Where (m And (1 << i)) <> 0
+                     Select list(i)).ToList()).OrderByDescending(Function(x) x.Count).ToList()
+    End Function
 End Module
