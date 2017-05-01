@@ -119,8 +119,7 @@ End Class
 Public Class PostProcessor
 
     Public Shared Function getPercentageMinimized(ByVal minimized As DataTable, ByVal table As DataTable) As Double
-        Return ((minimized.Columns.Count / table.Columns.Count) _
-                    * 100)
+        Return ((minimized.Columns.Count / table.Columns.Count) * 100)
     End Function
 
     Public Shared Function getRules(ByVal minimized As DataTable, ByVal table As DataTable) As HashSet(Of String)
@@ -147,8 +146,7 @@ Public Class PostProcessor
             For Each i As Integer In ind
                 Dim rul = New List(Of String)
                 Dim col As Integer = 1
-                Do While (col _
-                            < (minimized.Columns.Count - 1))
+                Do While (col < (minimized.Columns.Count - 1))
                     rul.Add(minimized.Rows((i - 1))(col).ToString)
                     col = (col + 1)
                 Loop
@@ -169,8 +167,7 @@ Public Class PostProcessor
             For Each list As List(Of String) In rules
                 R = ""
                 For Each ele As String In list
-                    R = (R _
-                                + (ele + " & "))
+                    R = (R + (ele + " & "))
                 Next
                 R = (R + "  => ")
                 RULES1.Add(R)
