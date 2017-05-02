@@ -195,14 +195,16 @@ Public Class PostProcessor
             Next
             DiIndex.Add(ind)
         Next
+        Dim pos As Integer = 0
         For Each ind As List(Of Integer) In DiIndex
             Dim rules = New List(Of List(Of String))
             Dim R As String = ""
             For Each i As Integer In ind
                 Dim rul = New List(Of String)
                 Dim col As Integer = 1
-                Do While (col < (minimized.Columns.Count - 1))
-                    rul.Add(minimized.Rows((i - 1))(col).ToString)
+                Do While (col _
+                            < (minimized.Columns.Count - 1))
+                    rul.Add((minimized.Columns(col).ColumnName + (" = " + minimized.Rows((i - 1))(col).ToString)))
                     col = (col + 1)
                 Loop
 
@@ -222,11 +224,13 @@ Public Class PostProcessor
             For Each list As List(Of String) In rules
                 R = ""
                 For Each ele As String In list
-                    R = (R + (ele + " & "))
+                    R = (R _
+                                + (ele + " & "))
                 Next
-                R = (R + "  => ")
+                R = (R + ("  => " + Di.ElementAt(pos)))
                 RULES1.Add(R)
             Next
+            pos = (pos + 1)
         Next
         Return RULES1
     End Function
