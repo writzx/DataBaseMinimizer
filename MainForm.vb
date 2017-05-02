@@ -28,21 +28,37 @@ Public Class MainForm
 
     Private Sub table_list_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles table_list.MouseDown
         Dim col = 0, row = 0
-        If GetListSubItemFromPoint(DirectCast(sender, ListView), e.X, e.Y, row, col) Then
+        Dim s = DirectCast(sender, ListView)
+        If GetListSubItemFromPoint(s, e.X, e.Y, row, col) Then
             If col = 1 Then
-                Dim si = DirectCast(sender, ListView).Items(row).SubItems(col)
-                If String.IsNullOrWhiteSpace(si.Text) Then
-                    si.Text = "Train"
-                ElseIf si.Text = "Train" Then
-                    si.Text = "Test"
-                ElseIf si.Text = "Test" Then
-                    si.Text = "Train and Test"
-                ElseIf si.Text = "Train and Test" Then
-                    si.Text = " "
-                End If
+                Dim si = s.Items(row).SubItems(col)
+                si.Text = GetSType(s, si.Text, row)
             End If
         End If
     End Sub
+
+    Function GetSType(ByVal lv As ListView, ByVal currentT As String, ByVal si As Integer)
+        Dim current = GetNextType(currentT)
+        If (Not String.IsNullOrWhiteSpace(current)) AndAlso
+            (lv.Items.Cast(Of ListViewItem).Any(Function(x) x.SubItems(1).Text = current) OrElse
+            (current = "Test" OrElse current = "Train") AndAlso lv.Items.Cast(Of ListViewItem).Any(Function(x) x.Index <> si AndAlso x.SubItems(1).Text = "Train and Test") OrElse
+            (current = "Train and Test" AndAlso (lv.Items.Cast(Of ListViewItem).Any(Function(x) x.Index <> si AndAlso x.SubItems(1).Text = "Train") OrElse lv.Items.Cast(Of ListViewItem).Any(Function(x) x.Index <> si AndAlso x.SubItems(1).Text = "Test")))) Then
+            Return GetSType(lv, current, si)
+        End If
+        Return current
+    End Function
+
+    Private Function GetNextType(current As String) As String
+        If String.IsNullOrWhiteSpace(current) Then
+            Return "Train"
+        ElseIf current = "Train" Then
+            Return "Test"
+        ElseIf current = "Test" Then
+            Return "Train and Test"
+        ElseIf current = "Train and Test" Then
+            Return " "
+        End If
+    End Function
 
     Function GetListSubItemFromPoint(ByVal lv As ListView,
       ByVal X As Integer,
