@@ -1,6 +1,9 @@
 ﻿Public Class FunctionsForm
 
+    Public tables As (train As DataTable, test As DataTable)
+
     Private RULES As New List(Of String)
+
     Private Sub back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
         Me.Hide()
         MainForm.Show()

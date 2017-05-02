@@ -130,13 +130,24 @@ Public Class MainForm
     End Sub
 
     Private Sub cont_button_Click(sender As Object, e As EventArgs) Handles cont_button.Click
-        Me.Hide()
+        Dim f = New FunctionsForm
         For Each t As ListViewItem In table_list.Items
             If t.SubItems(1).Text = "Train and Test" Then
-                Dim x = DivideList(tbl_list(t.Index), 0.7)
+                Dim trc = tbl_list(t.Index).Rows.Count
+                Dim p As Double, UPPER = Math.Floor((trc - 1) * 100 / trc), LOWER = Math.Ceiling(1 * 100 / trc)
+                While (Not (Double.TryParse(InputBox("Enter the percentage of train set (" & LOWER & "-" & UPPER & "): ", "Set Division", "70"), p) AndAlso
+                    (p > LOWER) AndAlso (p < UPPER)))
+                    If MsgBox("Enter a valid percentage value! Value should be between " & LOWER & " and " & UPPER, MsgBoxStyle.OkCancel Or MsgBoxStyle.Critical, "Invalid percentage.") = MsgBoxResult.Cancel Then
+                        Exit Sub
+                    End If
+                End While
+                p /= 100
+                f.tables = DivideList(tbl_list(t.Index), p)
+                Exit For
             End If
         Next
-        FunctionsForm.Show()
+        Me.Hide()
+        f.Show()
     End Sub
 
     Function DivideList(ByVal t As DataTable, trainRatio As Double) As (train As DataTable, test As DataTable)
