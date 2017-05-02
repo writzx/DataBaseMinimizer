@@ -188,61 +188,60 @@ Public Class PostProcessor
         Return ((minimized.Columns.Count / table.Columns.Count) * 100)
     End Function
 
-    Public Shared Function getRules(ByVal minimized As DataTable, ByVal table As DataTable) As HashSet(Of String)
-        Dim RULES1 = New HashSet(Of String)
-        Dim Di = New HashSet(Of String)
+    Public Shared Function getRules(ByVal minimized As DataTable) As HashSet(Of Dictionary(Of Integer, String))
+        Dim RULES1 = New HashSet(Of Dictionary(Of Integer, String))
+        Dim di = New HashSet(Of String)
         For Each row As DataRow In minimized.Rows
-            Di.Add(row((minimized.Columns.Count - 1)).ToString)
+            di.Add(row((minimized.Columns.Count - 1)).ToString)
         Next
-        Dim DiIndex = New List(Of List(Of Integer))
-        'Contains the Index of Different Diseases
-        For Each dis As String In Di
+        Dim diIndex = New List(Of List(Of Integer))
+        For Each ele As String In di
             Dim ind = New List(Of Integer)
             For Each row As DataRow In minimized.Rows
-                If row((minimized.Columns.Count - 1)).ToString.Equals(dis) Then
+                If row((minimized.Columns.Count - 1)).ToString.Equals(ele) Then
                     ind.Add(CType(row(0), Integer))
                 End If
 
             Next
-            DiIndex.Add(ind)
+            diIndex.Add(ind)
         Next
-        Dim pos As Integer = 0
-        For Each ind As List(Of Integer) In DiIndex
-            Dim rules = New List(Of List(Of String))
-            Dim R As String = ""
-            For Each i As Integer In ind
-                Dim rul = New List(Of String)
+        For Each list As List(Of Integer) In diIndex
+            Dim rul = New HashSet(Of List(Of String))
+            For Each i As Integer In list
+                Dim rulList = New List(Of String)
                 Dim col As Integer = 1
                 Do While (col _
                             < (minimized.Columns.Count - 1))
-                    rul.Add((minimized.Columns(col).ColumnName + (" = " + minimized.Rows((i - 1))(col).ToString)))
+                    rulList.Add(minimized.Rows((i - 1))(col).ToString)
                     col = (col + 1)
                 Loop
 
-                Dim isToAdd As Boolean = True
-                For Each list As List(Of String) In rules
-                    If list.SequenceEqual(rul) Then
-                        isToAdd = False
-                    End If
-
-                    Exit For
-                Next
-                If isToAdd Then
-                    rules.Add(rul)
+                If isUnique(rul, rulList) Then
+                    rul.Add(rulList)
                 End If
 
             Next
-            For Each list As List(Of String) In rules
-                R = ""
-                For Each ele As String In list
-                    R = (R _
-                                + (ele + " & "))
+            For Each dList As List(Of String) In rul
+                Dim teDrul = New Dictionary(Of Integer, String)
+                Dim colI As Integer = 0
+                For Each ele As String In dList
+                    teDrul.Add(colI, ele)
+                    colI = (colI + 1)
                 Next
-                R = (R + ("  => " + Di.ElementAt(pos)))
-                RULES1.Add(R)
+                RULES1.Add(teDrul)
             Next
-            pos = (pos + 1)
         Next
         Return RULES1
+    End Function
+
+    Public Shared Function isUnique(ByVal set1 As HashSet(Of List(Of String)), ByVal list As List(Of String)) As Boolean
+        For Each ls As List(Of String) In set1
+            For Each ele As String In ls
+                If list.Contains(ele) Then
+                    Return False
+                End If
+            Next
+        Next
+        Return True
     End Function
 End Class
