@@ -19,6 +19,7 @@ Public Class MainForm
                         Dim cmd As New OleDbCommand("SELECT * FROM [" & litem.Text & "]", con)
                         Dim dta As New OleDbDataAdapter(cmd)
                         dta.Fill(tbl)
+                        If excel Then tbl.AddIDColumn
                         tbl_list.Add(tbl)
                     Next
                 End Using
@@ -162,6 +163,10 @@ Public Class MainForm
                 test.Rows.Add(s(i).ItemArray)
             End If
         Next
+        train.Columns.Remove(train.Columns(0))
+        train.AddIDColumn
+        test.Columns.Remove(test.Columns(0))
+        test.AddIDColumn
         Return (train, test)
     End Function
 
@@ -188,8 +193,8 @@ Public Class PostProcessor
         Return ((minimized.Columns.Count / table.Columns.Count) * 100)
     End Function
 
-    Public Shared Function getRules(ByVal minimized As DataTable) As HashSet(Of Dictionary(Of Integer, String))
-        Dim RULES1 = New HashSet(Of Dictionary(Of Integer, String))
+    Public Shared Function getRules(ByVal minimized As DataTable) As HashSet(Of Dictionary(Of String, String))
+        Dim RULES1 = New HashSet(Of Dictionary(Of String, String))
         Dim di = New HashSet(Of String)
         For Each row As DataRow In minimized.Rows
             di.Add(row((minimized.Columns.Count - 1)).ToString)
@@ -205,16 +210,14 @@ Public Class PostProcessor
             Next
             diIndex.Add(ind)
         Next
+        Dim F = 0
         For Each list As List(Of Integer) In diIndex
             Dim rul = New HashSet(Of List(Of String))
             For Each i As Integer In list
                 Dim rulList = New List(Of String)
-                Dim col As Integer = 1
-                Do While (col _
-                            < (minimized.Columns.Count - 1))
-                    rulList.Add(minimized.Rows((i - 1))(col).ToString)
-                    col = (col + 1)
-                Loop
+                For col = 1 To minimized.Columns.Count - 2
+                    rulList.Add(minimized.Rows(i - 1)(col).ToString())
+                Next
 
                 If isUnique(rul, rulList) Then
                     rul.Add(rulList)
@@ -222,14 +225,16 @@ Public Class PostProcessor
 
             Next
             For Each dList As List(Of String) In rul
-                Dim teDrul = New Dictionary(Of Integer, String)
-                Dim colI As Integer = 0
+                Dim teDrul = New Dictionary(Of String, String)
+                Dim colI As Integer = 1
                 For Each ele As String In dList
-                    teDrul.Add(colI, ele)
+                    teDrul.Add(minimized.Columns(colI).ColumnName, ele)
                     colI = (colI + 1)
                 Next
+                teDrul.Add(-1, di(F))
                 RULES1.Add(teDrul)
             Next
+            F = F + 1
         Next
         Return RULES1
     End Function

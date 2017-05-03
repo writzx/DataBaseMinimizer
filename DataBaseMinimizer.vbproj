@@ -104,6 +104,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RulesForm.Designer.vb">
+      <DependentUpon>RulesForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RulesForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TableViewForm.Designer.vb">
       <DependentUpon>TableViewForm.vb</DependentUpon>
     </Compile>
@@ -123,6 +129,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RulesForm.resx">
+      <DependentUpon>RulesForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TableViewForm.resx">
       <DependentUpon>TableViewForm.vb</DependentUpon>
