@@ -91,4 +91,15 @@
         rf.RULES = RULES
         rf.Show()
     End Sub
+
+    Public Function columnDependencies(rules As IEnumerable(Of Dictionary(Of String, String))) As Dictionary(Of String, Double)
+        Dim total = rules.Sum(Function(x) x.Count())
+        Return rules.SelectMany(Function(x) x.Select(Function(y) y.Key)).GroupBy(Function(i) i).OrderByDescending(Function(x) x.Count).ToDictionary(Function(x) x.Key, Function(x) x.Count / total)
+    End Function
+
+    Private Sub calcdep_btn_Click(sender As Object, e As EventArgs) Handles calcdep_btn.Click
+        Dim cf = New ChartForm
+        cf.dependencies = columnDependencies(RULES)
+        cf.Show()
+    End Sub
 End Class
