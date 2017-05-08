@@ -125,12 +125,12 @@
                 If di.Key.Equals(diseaseName) Then
                     Dim rowIndex = di.Value
                     For Each row As Integer In rowIndex
-                        total += 1
+                        total = total + 1
                         For Each colName As String In dict.Values
                             For Each col As DataColumn In Test.Columns
                                 If col.ColumnName.Equals(col) Then
                                     If Test.Rows(row)(col).ToString().Equals(dict(colName)) Then
-                                        acc += 1
+                                        acc = acc + 1
                                     End If
                                 End If
                             Next
