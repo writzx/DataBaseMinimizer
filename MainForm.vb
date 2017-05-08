@@ -249,4 +249,46 @@ Public Class PostProcessor
         Next
         Return True
     End Function
+
+    Public Shared Function getAccuracy(Rules As List(Of Dictionary(Of String, String)), Test As DataTable) As List(Of Double)
+        Dim accuracy = New List(Of Double)()
+        Dim diName = New HashSet(Of String)()
+        For Each row As DataRow In Test.Rows
+            diName.Add(row(Test.Columns.Count - 1).ToString())
+        Next
+        Dim diIndex = New Dictionary(Of String, List(Of Integer))()
+        For Each ele As String In diName
+            Dim tList = New List(Of Integer)()
+            For Each row As DataRow In Test.Rows
+                If row(Test.Columns.Count - 1).ToString().Equals(ele) Then
+                    tList.Add(CInt(row(0)))
+                End If
+            Next
+            diIndex.Add(ele, tList)
+        Next
+        For Each dict As Dictionary(Of String, String) In Rules
+            Dim acc As Integer = 0, total As Integer = 0
+            Dim diseaseName As String = dict.Values.Last
+            For Each di As KeyValuePair(Of String, List(Of Integer)) In diIndex
+                If di.Key.Equals(diseaseName) Then
+                    Dim rowIndex = di.Value
+                    For Each row As Integer In rowIndex
+                        total += 1
+                        For Each colName As String In dict.Values
+                            For Each col As DataColumn In Test.Columns
+                                If col.ColumnName.Equals(col) Then
+                                    If Test.Rows(row)(col).ToString().Equals(dict(colName)) Then
+                                        acc += 1
+                                    End If
+                                End If
+                            Next
+                        Next
+                    Next
+                End If
+            Next
+            Dim percentageAccuracy As Double = (acc \ total) * 100
+            accuracy.Add(percentageAccuracy)
+        Next
+        Return accuracy
+    End Function
 End Class
