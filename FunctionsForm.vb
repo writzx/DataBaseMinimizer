@@ -113,6 +113,7 @@
         cf.dependencies = columnDependencies(RULES)
         cf.Show()
     End Sub
+
     Public Shared Function getAccuracy(Rules As List(Of Dictionary(Of String, String)), Test As DataTable) As List(Of Double)
         Dim accuracy = New List(Of Double)()
         Dim diName = New HashSet(Of String)()
@@ -124,46 +125,52 @@
             Dim tList = New List(Of Integer)()
             For Each row As DataRow In Test.Rows
                 If row(Test.Columns.Count - 1).ToString().Equals(ele) Then
-                    tList.Add(CInt(row(0)) - 1)
+                    tList.Add(CInt(row(0)))
                 End If
             Next
             diIndex.Add(ele, tList)
         Next
-        Dim hasFound As Boolean = False
         For Each dict As Dictionary(Of String, String) In Rules
             Dim acc As Integer = 0, total As Integer = 0
-            Dim diseaseName As String = dict.Values.Last
+            Dim diseaseName As String = dict.Values.Last()
             For Each di As KeyValuePair(Of String, List(Of Integer)) In diIndex
                 Dim rowIndex = di.Value
                 total = rowIndex.Count
                 acc = 0
                 If di.Key.Equals(diseaseName) Then
+                    Dim isCorrect As New List(Of Boolean)()
                     For Each row As Integer In rowIndex
-                        For Each colName As String In dict.Keys
+                        For Each colName As String In dict.Values
                             For Each col As DataColumn In Test.Columns
                                 If col.ColumnName.Equals(colName) Then
                                     If Test.Rows(row)(col).ToString().Equals(dict(colName)) Then
-                                        acc = acc + 1
-                                        hasFound = True
+                                        isCorrect.Add(True)
                                     End If
-                                End If
-                                If hasFound = True Then
-                                    hasFound = False
-                                    Exit For
                                 End If
                             Next
                         Next
                     Next
+                    If isAccurate(isCorrect) Then
+                        acc += 1
+                    End If
                 End If
                 Try
                     Dim percentageAccuracy As Double = (acc \ total) * 100
                     accuracy.Add(percentageAccuracy)
-                    acc = 0
                 Catch e As Exception
                 End Try
             Next
         Next
         Return accuracy
+    End Function
+
+    Private Shared Function isAccurate(list As List(Of Boolean)) As [Boolean]
+        For Each ele As Boolean In list
+            If Not ele Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 
     Private Sub test_btn_Click(sender As Object, e As EventArgs) Handles test_btn.Click
