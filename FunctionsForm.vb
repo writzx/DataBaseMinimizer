@@ -11,7 +11,7 @@
         MainForm.Show()
     End Sub
 
-    Function minimize(ByVal tbl As DataTable) As DataTable
+    Function minimize(ByVal tbl As DataTable, max As Integer) As DataTable
         Dim min As New DataTable()
         Dim distincts As New List(Of HashSet(Of String))
         Dim IND As New List(Of HashSet(Of HashSet(Of Integer)))
@@ -69,15 +69,26 @@
                 .Concat(New Integer() {0, tbl.Columns.Count - 1}).OrderBy(Function(x) x) _
                 .Select(Function(x) tbl.Columns(x).ColumnName).ToArray())
 
-        csets.ForEach(Sub(y) RULES.AddRange(PostProcessor.getRules(tbl.DefaultView.ToTable(tbl.TableName, False, y.indices.Select(Function(x) x + 1) _
-                .Concat(New Integer() {0, tbl.Columns.Count - 1}).OrderBy(Function(x) x) _
-                .Select(Function(x) tbl.Columns(x).ColumnName).ToArray()))))
+        csets.ForEach(Sub(y)
+                          If RULES.Count < max Then
+                              RULES.AddRange(PostProcessor.getRules(tbl.DefaultView.ToTable(tbl.TableName, False, y.indices.Select(Function(x) x + 1) _
+                                                                                        .Concat(New Integer() {0, tbl.Columns.Count - 1}).OrderBy(Function(x) x) _
+                                                                                        .Select(Function(x) tbl.Columns(x).ColumnName).ToArray())))
+                          End If
+                      End Sub)
 
         Return min
     End Function
 
     Private Sub FunctionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        mintable = minimize(tables.train)
+        Dim p As Integer
+        While (Not (Integer.TryParse(InputBox("Enter the number of rules to generate: (1-500): ", "Number of Rules", "100"), p) AndAlso
+                    (p > 1) AndAlso (p < 500)))
+            If MsgBox("Enter a valid value for number of rules! Value should be between 1 and 500", MsgBoxStyle.OkCancel Or MsgBoxStyle.Critical, "Invalid number of rules.") = MsgBoxResult.Cancel Then
+                Exit Sub
+            End If
+        End While
+        mintable = minimize(tables.train, p)
     End Sub
 
     Private Sub min_btn_Click(sender As Object, e As EventArgs) Handles min_btn.Click
@@ -86,7 +97,7 @@
         t.Show()
     End Sub
 
-    Private Sub genrules_btn_Click(sender As Object, e As EventArgs) Handles genrules_btn.Click
+    Private Sub genrules_btn_Click(sender As Object, e As EventArgs) Handles showrules_btn.Click
         Dim rf = New RulesForm
         rf.RULES = RULES
         rf.Show()
@@ -143,10 +154,8 @@
         Next
         Return accuracy
     End Function
-    Public Sub testAccuracy()
-        Dim accuracy = getAccuracy(RULES, tables.test)
-    End Sub
+
     Private Sub test_btn_Click(sender As Object, e As EventArgs) Handles test_btn.Click
-        testAccuracy()
+        Dim accuracy = getAccuracy(RULES, tables.test)
     End Sub
 End Class

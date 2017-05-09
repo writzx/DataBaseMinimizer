@@ -23,7 +23,7 @@ Partial Class FunctionsForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.min_btn = New System.Windows.Forms.Button()
-        Me.genrules_btn = New System.Windows.Forms.Button()
+        Me.showrules_btn = New System.Windows.Forms.Button()
         Me.calcdep_btn = New System.Windows.Forms.Button()
         Me.test_btn = New System.Windows.Forms.Button()
         Me.back_btn = New System.Windows.Forms.Button()
@@ -38,14 +38,14 @@ Partial Class FunctionsForm
         Me.min_btn.Text = "Minimize Database"
         Me.min_btn.UseVisualStyleBackColor = True
         '
-        'genrules_btn
+        'showrules_btn
         '
-        Me.genrules_btn.Location = New System.Drawing.Point(12, 50)
-        Me.genrules_btn.Name = "genrules_btn"
-        Me.genrules_btn.Size = New System.Drawing.Size(207, 32)
-        Me.genrules_btn.TabIndex = 1
-        Me.genrules_btn.Text = "Generate Rules"
-        Me.genrules_btn.UseVisualStyleBackColor = True
+        Me.showrules_btn.Location = New System.Drawing.Point(12, 50)
+        Me.showrules_btn.Name = "showrules_btn"
+        Me.showrules_btn.Size = New System.Drawing.Size(207, 32)
+        Me.showrules_btn.TabIndex = 1
+        Me.showrules_btn.Text = "Show Rules"
+        Me.showrules_btn.UseVisualStyleBackColor = True
         '
         'calcdep_btn
         '
@@ -82,7 +82,7 @@ Partial Class FunctionsForm
         Me.Controls.Add(Me.back_btn)
         Me.Controls.Add(Me.test_btn)
         Me.Controls.Add(Me.calcdep_btn)
-        Me.Controls.Add(Me.genrules_btn)
+        Me.Controls.Add(Me.showrules_btn)
         Me.Controls.Add(Me.min_btn)
         Me.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Location = New System.Drawing.Point(100, 100)
@@ -95,7 +95,7 @@ Partial Class FunctionsForm
     End Sub
 
     Friend WithEvents min_btn As Button
-    Friend WithEvents genrules_btn As Button
+    Friend WithEvents showrules_btn As Button
     Friend WithEvents calcdep_btn As Button
     Friend WithEvents test_btn As Button
     Friend WithEvents back_btn As Button
