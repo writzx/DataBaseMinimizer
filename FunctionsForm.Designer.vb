@@ -22,81 +22,137 @@ Partial Class FunctionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.min_btn = New System.Windows.Forms.Button()
-        Me.showrules_btn = New System.Windows.Forms.Button()
-        Me.calcdep_btn = New System.Windows.Forms.Button()
-        Me.test_btn = New System.Windows.Forms.Button()
-        Me.back_btn = New System.Windows.Forms.Button()
+        Me.tabs_funcs = New System.Windows.Forms.TabControl()
+        Me.mindb_tab = New System.Windows.Forms.TabPage()
+        Me.dGView = New System.Windows.Forms.DataGridView()
+        Me.rules_tab = New System.Windows.Forms.TabPage()
+        Me.rlist = New System.Windows.Forms.ListView()
+        Me.colid = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.rulcol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.depchart_tab = New System.Windows.Forms.TabPage()
+        Me.testacc_chart = New System.Windows.Forms.TabPage()
+        Me.tabs_funcs.SuspendLayout()
+        Me.mindb_tab.SuspendLayout()
+        CType(Me.dGView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.rules_tab.SuspendLayout()
         Me.SuspendLayout()
         '
-        'min_btn
+        'tabs_funcs
         '
-        Me.min_btn.Location = New System.Drawing.Point(12, 12)
-        Me.min_btn.Name = "min_btn"
-        Me.min_btn.Size = New System.Drawing.Size(207, 32)
-        Me.min_btn.TabIndex = 0
-        Me.min_btn.Text = "Minimize Database"
-        Me.min_btn.UseVisualStyleBackColor = True
+        Me.tabs_funcs.Controls.Add(Me.mindb_tab)
+        Me.tabs_funcs.Controls.Add(Me.rules_tab)
+        Me.tabs_funcs.Controls.Add(Me.depchart_tab)
+        Me.tabs_funcs.Controls.Add(Me.testacc_chart)
+        Me.tabs_funcs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabs_funcs.Location = New System.Drawing.Point(0, 0)
+        Me.tabs_funcs.Name = "tabs_funcs"
+        Me.tabs_funcs.SelectedIndex = 0
+        Me.tabs_funcs.Size = New System.Drawing.Size(1174, 814)
+        Me.tabs_funcs.TabIndex = 5
         '
-        'showrules_btn
+        'mindb_tab
         '
-        Me.showrules_btn.Location = New System.Drawing.Point(12, 50)
-        Me.showrules_btn.Name = "showrules_btn"
-        Me.showrules_btn.Size = New System.Drawing.Size(207, 32)
-        Me.showrules_btn.TabIndex = 1
-        Me.showrules_btn.Text = "Show Rules"
-        Me.showrules_btn.UseVisualStyleBackColor = True
+        Me.mindb_tab.Controls.Add(Me.dGView)
+        Me.mindb_tab.Location = New System.Drawing.Point(4, 30)
+        Me.mindb_tab.Name = "mindb_tab"
+        Me.mindb_tab.Padding = New System.Windows.Forms.Padding(3)
+        Me.mindb_tab.Size = New System.Drawing.Size(1166, 780)
+        Me.mindb_tab.TabIndex = 0
+        Me.mindb_tab.Text = "Miniminzed Database"
+        Me.mindb_tab.UseVisualStyleBackColor = True
         '
-        'calcdep_btn
+        'dGView
         '
-        Me.calcdep_btn.Location = New System.Drawing.Point(12, 88)
-        Me.calcdep_btn.Name = "calcdep_btn"
-        Me.calcdep_btn.Size = New System.Drawing.Size(207, 32)
-        Me.calcdep_btn.TabIndex = 2
-        Me.calcdep_btn.Text = "Dependencies (Chart)"
-        Me.calcdep_btn.UseVisualStyleBackColor = True
+        Me.dGView.AllowUserToAddRows = False
+        Me.dGView.AllowUserToDeleteRows = False
+        Me.dGView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dGView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dGView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dGView.Location = New System.Drawing.Point(3, 3)
+        Me.dGView.Name = "dGView"
+        Me.dGView.ReadOnly = True
+        Me.dGView.Size = New System.Drawing.Size(1160, 774)
+        Me.dGView.TabIndex = 5
         '
-        'test_btn
+        'rules_tab
         '
-        Me.test_btn.Location = New System.Drawing.Point(12, 126)
-        Me.test_btn.Name = "test_btn"
-        Me.test_btn.Size = New System.Drawing.Size(207, 32)
-        Me.test_btn.TabIndex = 3
-        Me.test_btn.Text = "Test (using test set)"
-        Me.test_btn.UseVisualStyleBackColor = True
+        Me.rules_tab.Controls.Add(Me.rlist)
+        Me.rules_tab.Location = New System.Drawing.Point(4, 30)
+        Me.rules_tab.Name = "rules_tab"
+        Me.rules_tab.Padding = New System.Windows.Forms.Padding(3)
+        Me.rules_tab.Size = New System.Drawing.Size(498, 420)
+        Me.rules_tab.TabIndex = 1
+        Me.rules_tab.Text = "Rules"
+        Me.rules_tab.UseVisualStyleBackColor = True
         '
-        'back_btn
+        'rlist
         '
-        Me.back_btn.Location = New System.Drawing.Point(12, 164)
-        Me.back_btn.Name = "back_btn"
-        Me.back_btn.Size = New System.Drawing.Size(207, 32)
-        Me.back_btn.TabIndex = 4
-        Me.back_btn.Text = "Back"
-        Me.back_btn.UseVisualStyleBackColor = True
+        Me.rlist.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colid, Me.rulcol})
+        Me.rlist.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rlist.GridLines = True
+        Me.rlist.Location = New System.Drawing.Point(3, 3)
+        Me.rlist.Name = "rlist"
+        Me.rlist.Size = New System.Drawing.Size(492, 414)
+        Me.rlist.TabIndex = 1
+        Me.rlist.UseCompatibleStateImageBehavior = False
+        Me.rlist.View = System.Windows.Forms.View.Details
+        '
+        'colid
+        '
+        Me.colid.Text = "ID"
+        Me.colid.Width = 32
+        '
+        'rulcol
+        '
+        Me.rulcol.Text = "RULES"
+        Me.rulcol.Width = 1890
+        '
+        'depchart_tab
+        '
+        Me.depchart_tab.Location = New System.Drawing.Point(4, 30)
+        Me.depchart_tab.Name = "depchart_tab"
+        Me.depchart_tab.Padding = New System.Windows.Forms.Padding(3)
+        Me.depchart_tab.Size = New System.Drawing.Size(498, 420)
+        Me.depchart_tab.TabIndex = 2
+        Me.depchart_tab.Text = "Dependency Chart"
+        Me.depchart_tab.UseVisualStyleBackColor = True
+        '
+        'testacc_chart
+        '
+        Me.testacc_chart.Location = New System.Drawing.Point(4, 30)
+        Me.testacc_chart.Name = "testacc_chart"
+        Me.testacc_chart.Padding = New System.Windows.Forms.Padding(3)
+        Me.testacc_chart.Size = New System.Drawing.Size(498, 420)
+        Me.testacc_chart.TabIndex = 3
+        Me.testacc_chart.Text = "Test and Accuracy"
+        Me.testacc_chart.UseVisualStyleBackColor = True
         '
         'FunctionsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 21.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(231, 208)
-        Me.Controls.Add(Me.back_btn)
-        Me.Controls.Add(Me.test_btn)
-        Me.Controls.Add(Me.calcdep_btn)
-        Me.Controls.Add(Me.showrules_btn)
-        Me.Controls.Add(Me.min_btn)
+        Me.ClientSize = New System.Drawing.Size(1174, 814)
+        Me.Controls.Add(Me.tabs_funcs)
         Me.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Location = New System.Drawing.Point(100, 100)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "FunctionsForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "FunctionsForm"
+        Me.tabs_funcs.ResumeLayout(False)
+        Me.mindb_tab.ResumeLayout(False)
+        CType(Me.dGView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.rules_tab.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents min_btn As Button
-    Friend WithEvents showrules_btn As Button
-    Friend WithEvents calcdep_btn As Button
-    Friend WithEvents test_btn As Button
-    Friend WithEvents back_btn As Button
+    Friend WithEvents tabs_funcs As TabControl
+    Friend WithEvents mindb_tab As TabPage
+    Friend WithEvents rules_tab As TabPage
+    Friend WithEvents depchart_tab As TabPage
+    Friend WithEvents testacc_chart As TabPage
+    Public WithEvents dGView As DataGridView
+    Friend WithEvents rlist As ListView
+    Friend WithEvents colid As ColumnHeader
+    Friend WithEvents rulcol As ColumnHeader
 End Class

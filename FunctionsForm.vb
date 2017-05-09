@@ -6,7 +6,11 @@
 
     Private mintable As DataTable
 
-    Private Sub back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
+    Public dependencies As Dictionary(Of String, Double)
+
+    Public accuracy As List(Of Double)
+
+    Private Sub back_btn_Click(sender As Object, e As EventArgs)
         Me.Hide()
         MainForm.Show()
     End Sub
@@ -89,18 +93,23 @@
             End If
         End While
         mintable = minimize(tables.train, p)
+        dGView.DataSource = mintable
+        SetRules()
+        dependencies = columnDependencies(RULES)
+        'dep chart
+        accuracy = getAccuracy(RULES, tables.test)
+        'acc lisst
     End Sub
 
-    Private Sub min_btn_Click(sender As Object, e As EventArgs) Handles min_btn.Click
-        Dim t = New TableViewForm
-        t.table = mintable
-        t.Show()
-    End Sub
-
-    Private Sub genrules_btn_Click(sender As Object, e As EventArgs) Handles showrules_btn.Click
-        Dim rf = New RulesForm
-        rf.RULES = RULES
-        rf.Show()
+    Private Sub SetRules()
+        If Not RULES Is Nothing Then
+            Dim i = 1
+            For Each r In RULES
+                Dim s = New ListViewItem(New String() {i, PostProcessor.ConvertRule(r)})
+                rlist.Items.Add(s)
+                i = i + 1
+            Next
+        End If
     End Sub
 
     Public Function columnDependencies(rules As IEnumerable(Of Dictionary(Of String, String))) As Dictionary(Of String, Double)
@@ -108,11 +117,6 @@
         Return rules.SelectMany(Function(x) x.Select(Function(y) y.Key)).GroupBy(Function(i) i).OrderByDescending(Function(x) x.Count).ToDictionary(Function(x) x.Key, Function(x) x.Count / total)
     End Function
 
-    Private Sub calcdep_btn_Click(sender As Object, e As EventArgs) Handles calcdep_btn.Click
-        Dim cf = New ChartForm
-        cf.dependencies = columnDependencies(RULES)
-        cf.Show()
-    End Sub
 
     Public Shared Function getAccuracy(Rules As List(Of Dictionary(Of String, String)), Test As DataTable) As List(Of Double)
         Dim accuracy = New List(Of Double)()
@@ -155,7 +159,7 @@
                     End If
                 End If
                 Try
-                    Dim percentageAccuracy As Double = (acc \ total) * 100
+                    Dim percentageAccuracy As Double = (acc / total) * 100
                     accuracy.Add(percentageAccuracy)
                 Catch e As Exception
                 End Try
@@ -172,8 +176,4 @@
         Next
         Return True
     End Function
-
-    Private Sub test_btn_Click(sender As Object, e As EventArgs) Handles test_btn.Click
-        Dim accuracy = getAccuracy(RULES, tables.test)
-    End Sub
 End Class

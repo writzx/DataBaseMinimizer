@@ -132,6 +132,8 @@ Public Class MainForm
 
     Private Sub cont_button_Click(sender As Object, e As EventArgs) Handles cont_button.Click
         Dim f = New FunctionsForm
+        Dim tables As (train As DataTable, test As DataTable) = (New DataTable, New DataTable)
+        Dim vvr = ""
         For Each t As ListViewItem In table_list.Items
             If t.SubItems(1).Text = "Train and Test" Then
                 Dim trc = tbl_list(t.Index).Rows.Count
@@ -143,12 +145,38 @@ Public Class MainForm
                     End If
                 End While
                 p /= 100
-                f.tables = DivideList(tbl_list(t.Index), p)
+                tables = DivideList(tbl_list(t.Index), p)
+                vvr = "Done"
                 Exit For
+            Else
+                If t.SubItems(1).Text = "Train" Then
+                    tables.train = tbl_list(t.Index)
+                    If vvr = "Test" Then
+                        vvr = "Done"
+                        Exit For
+                    Else
+                        vvr = "Train"
+                    End If
+                End If
+                If t.SubItems(1).Text = "Test" Then
+                    tables.test = tbl_list(t.Index)
+                    If vvr = "Train" Then
+                        vvr = "Done"
+                        Exit For
+                    Else
+                        vvr = "Test"
+                    End If
+                End If
             End If
         Next
-        Me.Hide()
-        f.Show()
+        'check same column in test and train set
+        If vvr = "Done" Then
+            f.tables = tables
+            Me.Hide()
+            f.Show()
+        Else
+            MsgBox("Please select a Test Set and a Train Set to continue")
+        End If
     End Sub
 
     Function DivideList(ByVal t As DataTable, trainRatio As Double) As (train As DataTable, test As DataTable)
@@ -188,6 +216,18 @@ Public Class MainForm
 
 End Class
 Public Class PostProcessor
+
+    Public Shared Function ConvertRule(rule As Dictionary(Of String, String)) As String
+        Dim s = ""
+        For Each x In rule
+            If (x.Key = rule.Last.Key) Then
+                s = s & "=> D=" & x.Value
+            Else
+                s = s & " & " & x.Key & "=" & x.Value
+            End If
+        Next
+        Return s.Substring(3)
+    End Function
 
     Public Shared Function getPercentageMinimized(ByVal minimized As DataTable, ByVal table As DataTable) As Double
         Return ((minimized.Columns.Count / table.Columns.Count) * 100)
