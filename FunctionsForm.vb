@@ -136,11 +136,12 @@
             For Each di As KeyValuePair(Of String, List(Of Integer)) In diIndex
                 If di.Key.Equals(diseaseName) Then
                     Dim rowIndex = di.Value
+                    total = rowIndex.Count
+                    acc = 0
                     For Each row As Integer In rowIndex
                         For Each colName As String In dict.Keys
                             For Each col As DataColumn In Test.Columns
                                 If col.ColumnName.Equals(colName) Then
-                                    total = total + 1
                                     If Test.Rows(row)(col).ToString().Equals(dict(colName)) Then
                                         acc = acc + 1
                                         hasFound = True
@@ -154,13 +155,13 @@
                         Next
                     Next
                 End If
+                Try
+                    Dim percentageAccuracy As Double = (acc \ total) * 100
+                    accuracy.Add(percentageAccuracy)
+                    acc = 0
+                Catch e As Exception
+                End Try
             Next
-            Try
-                Dim percentageAccuracy As Double = (acc \ total) * 100
-                accuracy.Add(percentageAccuracy)
-                acc = 0
-            Catch e As Exception
-            End Try
         Next
         Return accuracy
     End Function
