@@ -124,11 +124,12 @@
             Dim tList = New List(Of Integer)()
             For Each row As DataRow In Test.Rows
                 If row(Test.Columns.Count - 1).ToString().Equals(ele) Then
-                    tList.Add(CInt(row(0)))
+                    tList.Add(CInt(row(0)) - 1)
                 End If
             Next
             diIndex.Add(ele, tList)
         Next
+        Dim hasFound As Boolean = False
         For Each dict As Dictionary(Of String, String) In Rules
             Dim acc As Integer = 0, total As Integer = 0
             Dim diseaseName As String = dict.Values.Last
@@ -136,21 +137,30 @@
                 If di.Key.Equals(diseaseName) Then
                     Dim rowIndex = di.Value
                     For Each row As Integer In rowIndex
-                        total = total + 1
-                        For Each colName As String In dict.Values
+                        For Each colName As String In dict.Keys
                             For Each col As DataColumn In Test.Columns
-                                If col.ColumnName.Equals(col) Then
+                                If col.ColumnName.Equals(colName) Then
+                                    total = total + 1
                                     If Test.Rows(row)(col).ToString().Equals(dict(colName)) Then
                                         acc = acc + 1
+                                        hasFound = True
                                     End If
+                                End If
+                                If hasFound = True Then
+                                    hasFound = False
+                                    Exit For
                                 End If
                             Next
                         Next
                     Next
                 End If
             Next
-            Dim percentageAccuracy As Double = (acc \ total) * 100
-            accuracy.Add(percentageAccuracy)
+            Try
+                Dim percentageAccuracy As Double = (acc \ total) * 100
+                accuracy.Add(percentageAccuracy)
+                acc = 0
+            Catch e As Exception
+            End Try
         Next
         Return accuracy
     End Function
