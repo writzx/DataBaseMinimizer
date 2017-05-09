@@ -169,8 +169,20 @@ Public Class MainForm
                 End If
             End If
         Next
-        'check same column in test and train set
-        If vvr = "Done" Then
+        Dim tt As Boolean = True
+        For Each x In tables.train.Columns
+            tt = tt And tables.test.Columns.Contains(x.ColumnName)
+            If Not tt Then
+                Exit For
+            End If
+        Next
+        For Each x In tables.test.Columns
+            tt = tt And tables.train.Columns.Contains(x.ColumnName)
+            If Not tt Then
+                Exit For
+            End If
+        Next
+        If vvr = "Done" And tt Then
             f.tables = tables
             Me.Hide()
             f.Show()
