@@ -134,10 +134,10 @@
             Dim acc As Integer = 0, total As Integer = 0
             Dim diseaseName As String = dict.Values.Last
             For Each di As KeyValuePair(Of String, List(Of Integer)) In diIndex
+                Dim rowIndex = di.Value
+                total = rowIndex.Count
+                acc = 0
                 If di.Key.Equals(diseaseName) Then
-                    Dim rowIndex = di.Value
-                    total = rowIndex.Count
-                    acc = 0
                     For Each row As Integer In rowIndex
                         For Each colName As String In dict.Keys
                             For Each col As DataColumn In Test.Columns
