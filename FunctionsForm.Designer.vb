@@ -22,8 +22,8 @@ Partial Class FunctionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.tabs_funcs = New System.Windows.Forms.TabControl()
         Me.mindb_tab = New System.Windows.Forms.TabPage()
         Me.dGView = New System.Windows.Forms.DataGridView()
@@ -34,6 +34,7 @@ Partial Class FunctionsForm
         Me.acccol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.depchart_tab = New System.Windows.Forms.TabPage()
         Me.dep_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.mincol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tabs_funcs.SuspendLayout()
         Me.mindb_tab.SuspendLayout()
         CType(Me.dGView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,7 +92,7 @@ Partial Class FunctionsForm
         '
         'rlist
         '
-        Me.rlist.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colid, Me.rulcol, Me.acccol})
+        Me.rlist.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colid, Me.rulcol, Me.acccol, Me.mincol})
         Me.rlist.Dock = System.Windows.Forms.DockStyle.Fill
         Me.rlist.FullRowSelect = True
         Me.rlist.GridLines = True
@@ -131,17 +132,22 @@ Partial Class FunctionsForm
         '
         'dep_chart
         '
-        ChartArea4.AxisX.LabelStyle.Enabled = False
-        ChartArea4.Name = "ChartArea1"
-        Me.dep_chart.ChartAreas.Add(ChartArea4)
+        ChartArea1.AxisX.LabelStyle.Enabled = False
+        ChartArea1.Name = "ChartArea1"
+        Me.dep_chart.ChartAreas.Add(ChartArea1)
         Me.dep_chart.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend4.Name = "Legend1"
-        Me.dep_chart.Legends.Add(Legend4)
+        Legend1.Name = "Legend1"
+        Me.dep_chart.Legends.Add(Legend1)
         Me.dep_chart.Location = New System.Drawing.Point(3, 3)
         Me.dep_chart.Name = "dep_chart"
         Me.dep_chart.Size = New System.Drawing.Size(1160, 774)
         Me.dep_chart.TabIndex = 0
         Me.dep_chart.Text = "Dependency Chart"
+        '
+        'mincol
+        '
+        Me.mincol.Text = "% MINIMIZATION"
+        Me.mincol.Width = 150
         '
         'FunctionsForm
         '
@@ -174,4 +180,5 @@ Partial Class FunctionsForm
     Friend WithEvents rulcol As ColumnHeader
     Friend WithEvents dep_chart As DataVisualization.Charting.Chart
     Friend WithEvents acccol As ColumnHeader
+    Friend WithEvents mincol As ColumnHeader
 End Class

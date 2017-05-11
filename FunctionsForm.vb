@@ -106,7 +106,7 @@
         Dim erx As New List(Of ListViewItem)
         If Not RULES Is Nothing Then
             For i = 0 To RULES.Count - 1
-                Dim s = New ListViewItem(New String() {i + 1, PostProcessor.ConvertRule(RULES(i)), FormatNumber(CDbl(accuracy(i) * 100), 2)})
+                Dim s = New ListViewItem(New String() {i + 1, PostProcessor.ConvertRule(RULES(i)), FormatNumber(CDbl(accuracy(i) * 100), 2), FormatNumber(CDbl((RULES(i).Count - 1) * 100 / (tables.train.Columns.Count - 2)), 2)})
                 erx.Add(s)
             Next
             erx = erx.OrderByDescending(Function(x) Val(x.SubItems(2).Text)).ToList
