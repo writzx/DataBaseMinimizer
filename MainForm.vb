@@ -5,14 +5,12 @@ Public Class MainForm
     Private tbl_list As New List(Of DataTable)
     Private Sub browse_btn_Click(sender As Object, e As EventArgs) Handles browse_btn.Click
         If dbOpener.ShowDialog() = DialogResult.OK Then
-            table_list.Items.Clear()
-            tbl_list.Clear()
             For Each fname As String In dbOpener.FileNames
                 Dim excel As Boolean = Path.GetExtension(fname).Contains("xls")
                 Dim constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fname & If(excel, ";Extended Properties=""Excel 12.0 Xml; HDR = YES""", String.Empty)
                 Using con As New OleDbConnection(constr)
                     con.Open()
-                    Dim range = con.GetSchema("Tables").Select("TABLE_TYPE = 'TABLE'").Select(Function(x) New ListViewItem(New String() {x("TABLE_NAME").ToString(), " "})).ToArray()
+                    Dim range = con.GetSchema("Tables").Select("TABLE_TYPE = 'TABLE'").TakeWhile(Function(r) table_list.FindItemWithText(r("TABLE_NAME").ToString) Is Nothing).Select(Function(x) New ListViewItem(New String() {x("TABLE_NAME").ToString(), " "})).ToArray()
                     table_list.Items.AddRange(range)
                     For Each litem In range
                         Dim tbl As New DataTable
@@ -183,6 +181,14 @@ Public Class MainForm
             End If
         Next
         If vvr = "Done" And tt Then
+            Dim p As Integer
+            While (Not (Integer.TryParse(InputBox("Enter the number of rules to generate: (1-500): ", "Number of Rules", "100"), p) AndAlso
+                    (p > 1) AndAlso (p < 500)))
+                If MsgBox("Enter a valid value for number of rules! Value should be between 1 and 500", MsgBoxStyle.OkCancel Or MsgBoxStyle.Critical, "Invalid number of rules.") = MsgBoxResult.Cancel Then
+                    Exit Sub
+                End If
+            End While
+            f.rules_count = p
             f.tables = tables
             Me.Hide()
             f.Show()

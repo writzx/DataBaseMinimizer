@@ -22,6 +22,8 @@ Partial Class FunctionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.tabs_funcs = New System.Windows.Forms.TabControl()
         Me.mindb_tab = New System.Windows.Forms.TabPage()
         Me.dGView = New System.Windows.Forms.DataGridView()
@@ -29,12 +31,15 @@ Partial Class FunctionsForm
         Me.rlist = New System.Windows.Forms.ListView()
         Me.colid = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.rulcol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.acccol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.depchart_tab = New System.Windows.Forms.TabPage()
-        Me.testacc_chart = New System.Windows.Forms.TabPage()
+        Me.dep_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.tabs_funcs.SuspendLayout()
         Me.mindb_tab.SuspendLayout()
         CType(Me.dGView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.rules_tab.SuspendLayout()
+        Me.depchart_tab.SuspendLayout()
+        CType(Me.dep_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabs_funcs
@@ -42,7 +47,6 @@ Partial Class FunctionsForm
         Me.tabs_funcs.Controls.Add(Me.mindb_tab)
         Me.tabs_funcs.Controls.Add(Me.rules_tab)
         Me.tabs_funcs.Controls.Add(Me.depchart_tab)
-        Me.tabs_funcs.Controls.Add(Me.testacc_chart)
         Me.tabs_funcs.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tabs_funcs.Location = New System.Drawing.Point(0, 0)
         Me.tabs_funcs.Name = "tabs_funcs"
@@ -80,19 +84,20 @@ Partial Class FunctionsForm
         Me.rules_tab.Location = New System.Drawing.Point(4, 30)
         Me.rules_tab.Name = "rules_tab"
         Me.rules_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.rules_tab.Size = New System.Drawing.Size(498, 420)
+        Me.rules_tab.Size = New System.Drawing.Size(1166, 780)
         Me.rules_tab.TabIndex = 1
         Me.rules_tab.Text = "Rules"
         Me.rules_tab.UseVisualStyleBackColor = True
         '
         'rlist
         '
-        Me.rlist.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colid, Me.rulcol})
+        Me.rlist.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colid, Me.rulcol, Me.acccol})
         Me.rlist.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rlist.FullRowSelect = True
         Me.rlist.GridLines = True
         Me.rlist.Location = New System.Drawing.Point(3, 3)
         Me.rlist.Name = "rlist"
-        Me.rlist.Size = New System.Drawing.Size(492, 414)
+        Me.rlist.Size = New System.Drawing.Size(1160, 774)
         Me.rlist.TabIndex = 1
         Me.rlist.UseCompatibleStateImageBehavior = False
         Me.rlist.View = System.Windows.Forms.View.Details
@@ -100,32 +105,43 @@ Partial Class FunctionsForm
         'colid
         '
         Me.colid.Text = "ID"
-        Me.colid.Width = 32
+        Me.colid.Width = 50
         '
         'rulcol
         '
         Me.rulcol.Text = "RULES"
-        Me.rulcol.Width = 1890
+        Me.rulcol.Width = 800
+        '
+        'acccol
+        '
+        Me.acccol.Text = "ACCURACY (TEST)"
+        Me.acccol.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.acccol.Width = 150
         '
         'depchart_tab
         '
+        Me.depchart_tab.Controls.Add(Me.dep_chart)
         Me.depchart_tab.Location = New System.Drawing.Point(4, 30)
         Me.depchart_tab.Name = "depchart_tab"
         Me.depchart_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.depchart_tab.Size = New System.Drawing.Size(498, 420)
+        Me.depchart_tab.Size = New System.Drawing.Size(1166, 780)
         Me.depchart_tab.TabIndex = 2
         Me.depchart_tab.Text = "Dependency Chart"
         Me.depchart_tab.UseVisualStyleBackColor = True
         '
-        'testacc_chart
+        'dep_chart
         '
-        Me.testacc_chart.Location = New System.Drawing.Point(4, 30)
-        Me.testacc_chart.Name = "testacc_chart"
-        Me.testacc_chart.Padding = New System.Windows.Forms.Padding(3)
-        Me.testacc_chart.Size = New System.Drawing.Size(498, 420)
-        Me.testacc_chart.TabIndex = 3
-        Me.testacc_chart.Text = "Test and Accuracy"
-        Me.testacc_chart.UseVisualStyleBackColor = True
+        ChartArea4.AxisX.LabelStyle.Enabled = False
+        ChartArea4.Name = "ChartArea1"
+        Me.dep_chart.ChartAreas.Add(ChartArea4)
+        Me.dep_chart.Dock = System.Windows.Forms.DockStyle.Fill
+        Legend4.Name = "Legend1"
+        Me.dep_chart.Legends.Add(Legend4)
+        Me.dep_chart.Location = New System.Drawing.Point(3, 3)
+        Me.dep_chart.Name = "dep_chart"
+        Me.dep_chart.Size = New System.Drawing.Size(1160, 774)
+        Me.dep_chart.TabIndex = 0
+        Me.dep_chart.Text = "Dependency Chart"
         '
         'FunctionsForm
         '
@@ -143,6 +159,8 @@ Partial Class FunctionsForm
         Me.mindb_tab.ResumeLayout(False)
         CType(Me.dGView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.rules_tab.ResumeLayout(False)
+        Me.depchart_tab.ResumeLayout(False)
+        CType(Me.dep_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -150,9 +168,10 @@ Partial Class FunctionsForm
     Friend WithEvents mindb_tab As TabPage
     Friend WithEvents rules_tab As TabPage
     Friend WithEvents depchart_tab As TabPage
-    Friend WithEvents testacc_chart As TabPage
     Public WithEvents dGView As DataGridView
     Friend WithEvents rlist As ListView
     Friend WithEvents colid As ColumnHeader
     Friend WithEvents rulcol As ColumnHeader
+    Friend WithEvents dep_chart As DataVisualization.Charting.Chart
+    Friend WithEvents acccol As ColumnHeader
 End Class

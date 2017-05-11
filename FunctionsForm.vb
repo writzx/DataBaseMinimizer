@@ -1,5 +1,7 @@
 ﻿Public Class FunctionsForm
 
+    Public rules_count As Integer
+
     Public tables As (train As DataTable, test As DataTable)
 
     Public RULES As New List(Of Dictionary(Of String, String))
@@ -85,30 +87,35 @@
     End Function
 
     Private Sub FunctionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim p As Integer
-        While (Not (Integer.TryParse(InputBox("Enter the number of rules to generate: (1-500): ", "Number of Rules", "100"), p) AndAlso
-                    (p > 1) AndAlso (p < 500)))
-            If MsgBox("Enter a valid value for number of rules! Value should be between 1 and 500", MsgBoxStyle.OkCancel Or MsgBoxStyle.Critical, "Invalid number of rules.") = MsgBoxResult.Cancel Then
-                Exit Sub
-            End If
-        End While
-        mintable = minimize(tables.train, p)
+        mintable = minimize(tables.train, rules_count)
         dGView.DataSource = mintable
+        accuracy = getAccuracy(RULES, tables.test)
         SetRules()
         dependencies = columnDependencies(RULES)
-        'dep chart
-        accuracy = getAccuracy(RULES, tables.test)
-        'acc lisst
+        Dim r = 1D
+        For Each s In dependencies
+            If (s.Value > 0 AndAlso Not (s.Key = "-1")) Then
+                Dim x = dep_chart.Series.Add(s.Key)
+                x.Points.AddXY(r, s.Value)
+                r = r + 0.1
+            End If
+        Next
     End Sub
 
     Private Sub SetRules()
+        Dim erx As New List(Of ListViewItem)
         If Not RULES Is Nothing Then
-            Dim i = 1
-            For Each r In RULES
-                Dim s = New ListViewItem(New String() {i, PostProcessor.ConvertRule(r)})
-                rlist.Items.Add(s)
-                i = i + 1
+            For i = 0 To RULES.Count - 1
+                Dim s = New ListViewItem(New String() {i + 1, PostProcessor.ConvertRule(RULES(i)), FormatNumber(CDbl(accuracy(i) * 100), 2)})
+                erx.Add(s)
             Next
+            erx = erx.OrderByDescending(Function(x) Val(x.SubItems(2).Text)).ToList
+            Dim r = 1
+            erx.ForEach(Sub(e)
+                            e.SubItems(0).Text = r
+                            r = r + 1
+                        End Sub)
+            rlist.Items.AddRange(erx.ToArray)
         End If
     End Sub
 
@@ -135,7 +142,7 @@
             diIndex.Add(ele, tList)
         Next
         For Each dict As Dictionary(Of String, String) In Rules
-            Dim acc As Integer = 0, total As Integer = 0
+            Dim acc As Double = 0, total As Double = 0
             Dim diseaseName As String = dict.Values.Last()
             For Each di As KeyValuePair(Of String, List(Of Integer)) In diIndex
                 Dim rowIndex = di.Value
@@ -159,7 +166,7 @@
                     End If
                 End If
                 Try
-                    Dim percentageAccuracy As Double = (acc / total) * 100
+                    Dim percentageAccuracy As Double = (acc / total)
                     accuracy.Add(percentageAccuracy)
                 Catch e As Exception
                 End Try
