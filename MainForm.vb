@@ -3,14 +3,16 @@ Imports System.Data.OleDb
 
 Public Class MainForm
     Private tbl_list As New List(Of DataTable)
-    Private Sub browse_btn_Click(sender As Object, e As EventArgs) Handles browse_btn.Click
+    Public fForm As FunctionsForm
+
+    Private Sub browse_btn_Click(sender As Object, e As EventArgs) Handles browse_btn.Click, MyBase.Shown
         If dbOpener.ShowDialog() = DialogResult.OK Then
             For Each fname As String In dbOpener.FileNames
                 Dim excel As Boolean = Path.GetExtension(fname).Contains("xls")
                 Dim constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fname & If(excel, ";Extended Properties=""Excel 12.0 Xml; HDR = YES""", String.Empty)
                 Using con As New OleDbConnection(constr)
                     con.Open()
-                    Dim range = con.GetSchema("Tables").Select("TABLE_TYPE = 'TABLE'").TakeWhile(Function(r) table_list.FindItemWithText(r("TABLE_NAME").ToString) Is Nothing).Select(Function(x) New ListViewItem(New String() {x("TABLE_NAME").ToString(), " "})).ToArray()
+                    Dim range = con.GetSchema("Tables").Select("TABLE_TYPE = 'TABLE'").Where(Function(r) table_list.FindItemWithText(r("TABLE_NAME").ToString) Is Nothing).Select(Function(x) New ListViewItem(New String() {x("TABLE_NAME").ToString(), " "})).ToArray()
                     table_list.Items.AddRange(range)
                     For Each litem In range
                         Dim tbl As New DataTable
@@ -129,7 +131,7 @@ Public Class MainForm
     End Sub
 
     Private Sub cont_button_Click(sender As Object, e As EventArgs) Handles cont_button.Click
-        Dim f = New FunctionsForm
+        fForm = New FunctionsForm
         Dim tables As (train As DataTable, test As DataTable) = (New DataTable, New DataTable)
         Dim vvr = ""
         For Each t As ListViewItem In table_list.Items
@@ -188,10 +190,10 @@ Public Class MainForm
                     Exit Sub
                 End If
             End While
-            f.rules_count = p
-            f.tables = tables
-            Me.Hide()
-            f.Show()
+            fForm.rules_count = p
+            fForm.tables = tables
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
         Else
             MsgBox("Please select a Test Set and a Train Set to continue")
         End If
@@ -231,7 +233,6 @@ Public Class MainForm
             items(j) = temp
         Next i
     End Sub
-
 End Class
 Public Class PostProcessor
 

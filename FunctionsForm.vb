@@ -12,6 +12,8 @@
 
     Public accuracy As List(Of Double)
 
+    Public mf As MainForm2
+
     Private Sub back_btn_Click(sender As Object, e As EventArgs)
         Me.Hide()
         MainForm.Show()
@@ -24,7 +26,8 @@
 
         For i = 1 To tbl.Columns.Count - 1
             Dim distinct As New HashSet(Of String)
-            Dim INDi = tbl.AsEnumerable.Select(Function(x) x(i).ToString).ToList.Indiscernable(distinct)
+            Dim r = i
+            Dim INDi = tbl.AsEnumerable.Select(Function(x) x(r).ToString).ToList.Indiscernable(distinct)
             distincts.Add(distinct)
             IND.Add(INDi)
         Next
@@ -86,7 +89,7 @@
         Return min
     End Function
 
-    Private Sub FunctionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FunctionsForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         mintable = minimize(tables.train, rules_count)
         dGView.DataSource = mintable
         accuracy = getAccuracy(RULES, tables.test)
@@ -183,4 +186,8 @@
         Next
         Return True
     End Function
+
+    Private Sub FunctionsForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        mf.Show()
+    End Sub
 End Class

@@ -22,8 +22,8 @@ Partial Class FunctionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.tabs_funcs = New System.Windows.Forms.TabControl()
         Me.mindb_tab = New System.Windows.Forms.TabPage()
         Me.dGView = New System.Windows.Forms.DataGridView()
@@ -32,9 +32,9 @@ Partial Class FunctionsForm
         Me.colid = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.rulcol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.acccol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.mincol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.depchart_tab = New System.Windows.Forms.TabPage()
         Me.dep_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.mincol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tabs_funcs.SuspendLayout()
         Me.mindb_tab.SuspendLayout()
         CType(Me.dGView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,10 +82,10 @@ Partial Class FunctionsForm
         'rules_tab
         '
         Me.rules_tab.Controls.Add(Me.rlist)
-        Me.rules_tab.Location = New System.Drawing.Point(4, 30)
+        Me.rules_tab.Location = New System.Drawing.Point(4, 22)
         Me.rules_tab.Name = "rules_tab"
         Me.rules_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.rules_tab.Size = New System.Drawing.Size(1166, 780)
+        Me.rules_tab.Size = New System.Drawing.Size(1166, 788)
         Me.rules_tab.TabIndex = 1
         Me.rules_tab.Text = "Rules"
         Me.rules_tab.UseVisualStyleBackColor = True
@@ -98,7 +98,7 @@ Partial Class FunctionsForm
         Me.rlist.GridLines = True
         Me.rlist.Location = New System.Drawing.Point(3, 3)
         Me.rlist.Name = "rlist"
-        Me.rlist.Size = New System.Drawing.Size(1160, 774)
+        Me.rlist.Size = New System.Drawing.Size(1160, 782)
         Me.rlist.TabIndex = 1
         Me.rlist.UseCompatibleStateImageBehavior = False
         Me.rlist.View = System.Windows.Forms.View.Details
@@ -119,47 +119,46 @@ Partial Class FunctionsForm
         Me.acccol.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.acccol.Width = 150
         '
+        'mincol
+        '
+        Me.mincol.Text = "% MINIMIZATION"
+        Me.mincol.Width = 150
+        '
         'depchart_tab
         '
         Me.depchart_tab.Controls.Add(Me.dep_chart)
-        Me.depchart_tab.Location = New System.Drawing.Point(4, 30)
+        Me.depchart_tab.Location = New System.Drawing.Point(4, 22)
         Me.depchart_tab.Name = "depchart_tab"
         Me.depchart_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.depchart_tab.Size = New System.Drawing.Size(1166, 780)
+        Me.depchart_tab.Size = New System.Drawing.Size(1166, 788)
         Me.depchart_tab.TabIndex = 2
         Me.depchart_tab.Text = "Dependency Chart"
         Me.depchart_tab.UseVisualStyleBackColor = True
         '
         'dep_chart
         '
-        ChartArea1.AxisX.LabelStyle.Enabled = False
-        ChartArea1.Name = "ChartArea1"
-        Me.dep_chart.ChartAreas.Add(ChartArea1)
+        ChartArea2.AxisX.LabelStyle.Enabled = False
+        ChartArea2.Name = "ChartArea1"
+        Me.dep_chart.ChartAreas.Add(ChartArea2)
         Me.dep_chart.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.Name = "Legend1"
-        Me.dep_chart.Legends.Add(Legend1)
+        Legend2.Name = "Legend1"
+        Me.dep_chart.Legends.Add(Legend2)
         Me.dep_chart.Location = New System.Drawing.Point(3, 3)
         Me.dep_chart.Name = "dep_chart"
-        Me.dep_chart.Size = New System.Drawing.Size(1160, 774)
+        Me.dep_chart.Size = New System.Drawing.Size(1160, 782)
         Me.dep_chart.TabIndex = 0
         Me.dep_chart.Text = "Dependency Chart"
         '
-        'mincol
-        '
-        Me.mincol.Text = "% MINIMIZATION"
-        Me.mincol.Width = 150
-        '
         'FunctionsForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 21.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(1174, 814)
         Me.Controls.Add(Me.tabs_funcs)
         Me.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Location = New System.Drawing.Point(100, 100)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "FunctionsForm"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FunctionsForm"
         Me.tabs_funcs.ResumeLayout(False)
         Me.mindb_tab.ResumeLayout(False)

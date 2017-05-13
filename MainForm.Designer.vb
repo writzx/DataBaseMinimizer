@@ -32,6 +32,7 @@ Partial Class MainForm
         Me.table_list = New System.Windows.Forms.ListView()
         Me.main_panel = New System.Windows.Forms.Panel()
         Me.cont_button = New System.Windows.Forms.Button()
+        Me.cancel_btn = New System.Windows.Forms.Button()
         CType(Me.table_view, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.main_panel.SuspendLayout()
         Me.SuspendLayout()
@@ -51,8 +52,6 @@ Partial Class MainForm
         Me.table_view.AllowUserToAddRows = False
         Me.table_view.AllowUserToDeleteRows = False
         Me.table_view.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.table_view.BackgroundColor = System.Drawing.SystemColors.Window
-        Me.table_view.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.table_view.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.table_view.Dock = System.Windows.Forms.DockStyle.Fill
         Me.table_view.Location = New System.Drawing.Point(200, 0)
@@ -108,18 +107,31 @@ Partial Class MainForm
         'cont_button
         '
         Me.cont_button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cont_button.Location = New System.Drawing.Point(572, 520)
+        Me.cont_button.Location = New System.Drawing.Point(498, 520)
         Me.cont_button.Name = "cont_button"
-        Me.cont_button.Size = New System.Drawing.Size(200, 29)
+        Me.cont_button.Size = New System.Drawing.Size(274, 29)
         Me.cont_button.TabIndex = 4
         Me.cont_button.Text = "Continue"
         Me.cont_button.UseVisualStyleBackColor = True
         '
+        'cancel_btn
+        '
+        Me.cancel_btn.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.cancel_btn.Location = New System.Drawing.Point(218, 520)
+        Me.cancel_btn.Name = "cancel_btn"
+        Me.cancel_btn.Size = New System.Drawing.Size(274, 29)
+        Me.cancel_btn.TabIndex = 5
+        Me.cancel_btn.Text = "Cancel"
+        Me.cancel_btn.UseVisualStyleBackColor = True
+        '
         'MainForm
         '
+        Me.AcceptButton = Me.cont_button
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 21.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.cancel_btn
         Me.ClientSize = New System.Drawing.Size(784, 561)
+        Me.Controls.Add(Me.cancel_btn)
         Me.Controls.Add(Me.cont_button)
         Me.Controls.Add(Me.main_panel)
         Me.Controls.Add(Me.browse_btn)
@@ -142,4 +154,5 @@ Partial Class MainForm
     Private WithEvents ttype As ColumnHeader
     Friend WithEvents main_panel As Panel
     Friend WithEvents cont_button As Button
+    Friend WithEvents cancel_btn As Button
 End Class
