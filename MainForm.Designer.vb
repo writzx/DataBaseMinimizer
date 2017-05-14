@@ -51,7 +51,6 @@ Partial Class MainForm
         '
         Me.table_view.AllowUserToAddRows = False
         Me.table_view.AllowUserToDeleteRows = False
-        Me.table_view.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.table_view.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.table_view.Dock = System.Windows.Forms.DockStyle.Fill
         Me.table_view.Location = New System.Drawing.Point(200, 0)
@@ -116,6 +115,7 @@ Partial Class MainForm
         '
         'cancel_btn
         '
+        Me.cancel_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.cancel_btn.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.cancel_btn.Location = New System.Drawing.Point(218, 520)
         Me.cancel_btn.Name = "cancel_btn"

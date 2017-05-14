@@ -19,7 +19,7 @@
         MainForm.Show()
     End Sub
 
-    Function minimize(ByVal tbl As DataTable, max As Integer) As DataTable
+    Public Function minimize(ByVal tbl As DataTable, max As Integer) As DataTable
         Dim min As New DataTable()
         Dim distincts As New List(Of HashSet(Of String))
         Dim IND As New List(Of HashSet(Of HashSet(Of Integer)))
@@ -66,7 +66,7 @@
                                             combined.indices.Add(thisK.index)
                                             combined.K = combined.IND.DependencyOn(INDD)
                                         Next
-                                        If combined.K = 1 Then
+                                        If combined.K >= 0.9 Then
                                             csets.Add(combined)
                                         End If
                                     End Sub)
@@ -90,22 +90,13 @@
     End Function
 
     Private Sub FunctionsForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        mintable = minimize(tables.train, rules_count)
-        dGView.DataSource = mintable
-        accuracy = getAccuracy(RULES, tables.test)
-        SetRules()
-        dependencies = columnDependencies(RULES)
-        Dim r = 1D
-        For Each s In dependencies
-            If (s.Value > 0 AndAlso Not (s.Key = "-1")) Then
-                Dim x = dep_chart.Series.Add(s.Key)
-                x.Points.AddXY(r, s.Value)
-                r = r + 0.1
-            End If
-        Next
+        tabs_funcs.Visible = False
+        progress_panel.Visible = True
+        worker.RunWorkerAsync()
     End Sub
 
-    Private Sub SetRules()
+    Private Sub SetVals()
+        dGView.DataSource = mintable
         Dim erx As New List(Of ListViewItem)
         If Not RULES Is Nothing Then
             For i = 0 To RULES.Count - 1
@@ -120,6 +111,16 @@
                         End Sub)
             rlist.Items.AddRange(erx.ToArray)
         End If
+        Dim rr = 1D
+        For Each s In dependencies
+            If (s.Value > 0 AndAlso Not (s.Key = "-1")) Then
+                Dim x = dep_chart.Series.Add(s.Key)
+                x.Points.AddXY(rr, s.Value)
+                rr = rr + 0.1
+            End If
+        Next
+        progress_panel.Visible = False
+        tabs_funcs.Visible = True
     End Sub
 
     Public Function columnDependencies(rules As IEnumerable(Of Dictionary(Of String, String))) As Dictionary(Of String, Double)
@@ -189,5 +190,23 @@
 
     Private Sub FunctionsForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         mf.Show()
+    End Sub
+
+    Private Sub worker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles worker.DoWork
+        worker.ReportProgress(0, "Minimizing Train Set...")
+        mintable = minimize(tables.train, rules_count)
+        worker.ReportProgress(40, "Calculating accuracy...")
+        accuracy = getAccuracy(RULES, tables.test)
+        worker.ReportProgress(80, "Calculating dependencies...")
+        dependencies = columnDependencies(RULES)
+        worker.ReportProgress(100, "Testing Complete...")
+    End Sub
+
+    Private Sub worker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles worker.RunWorkerCompleted
+        SetVals()
+    End Sub
+
+    Private Sub worker_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles worker.ProgressChanged
+        label_progress.Text = e.UserState
     End Sub
 End Class

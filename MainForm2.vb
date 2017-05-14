@@ -11,6 +11,8 @@
             test_label.Text = "TEST SET"
             train_view.DataSource = fForm.tables.train
             test_view.DataSource = fForm.tables.test
+            train_view.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+            test_view.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         End If
     End Sub
 

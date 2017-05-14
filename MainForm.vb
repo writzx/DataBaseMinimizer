@@ -126,8 +126,9 @@ Public Class MainForm
     End Function
 
     Private Sub table_list_SelectedIndexChanged(sender As Object, e As EventArgs) Handles table_list.SelectedIndexChanged
-        Application.DoEvents()
+        table_view.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
         If (table_list.SelectedIndices.Count > 0) Then table_view.DataSource = tbl_list(table_list.SelectedIndices(0))
+        table_view.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
     End Sub
 
     Private Sub cont_button_Click(sender As Object, e As EventArgs) Handles cont_button.Click
@@ -139,7 +140,7 @@ Public Class MainForm
                 Dim trc = tbl_list(t.Index).Rows.Count
                 Dim p As Double, UPPER = Math.Floor((trc - 1) * 100 / trc), LOWER = Math.Ceiling(1 * 100 / trc)
                 While (Not (Double.TryParse(InputBox("Enter the percentage of train set (" & LOWER & "-" & UPPER & "): ", "Set Division", "70"), p) AndAlso
-                    (p > LOWER) AndAlso (p < UPPER)))
+                    (p >= LOWER) AndAlso (p <= UPPER)))
                     If MsgBox("Enter a valid percentage value! Value should be between " & LOWER & " and " & UPPER, MsgBoxStyle.OkCancel Or MsgBoxStyle.Critical, "Invalid percentage.") = MsgBoxResult.Cancel Then
                         Exit Sub
                     End If

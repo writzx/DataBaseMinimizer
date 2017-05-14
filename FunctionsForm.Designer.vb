@@ -22,8 +22,8 @@ Partial Class FunctionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.tabs_funcs = New System.Windows.Forms.TabControl()
         Me.mindb_tab = New System.Windows.Forms.TabPage()
         Me.dGView = New System.Windows.Forms.DataGridView()
@@ -35,12 +35,17 @@ Partial Class FunctionsForm
         Me.mincol = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.depchart_tab = New System.Windows.Forms.TabPage()
         Me.dep_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.worker = New System.ComponentModel.BackgroundWorker()
+        Me.resp_progress = New System.Windows.Forms.ProgressBar()
+        Me.label_progress = New System.Windows.Forms.Label()
+        Me.progress_panel = New System.Windows.Forms.Panel()
         Me.tabs_funcs.SuspendLayout()
         Me.mindb_tab.SuspendLayout()
         CType(Me.dGView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.rules_tab.SuspendLayout()
         Me.depchart_tab.SuspendLayout()
         CType(Me.dep_chart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.progress_panel.SuspendLayout()
         Me.SuspendLayout()
         '
         'tabs_funcs
@@ -52,8 +57,9 @@ Partial Class FunctionsForm
         Me.tabs_funcs.Location = New System.Drawing.Point(0, 0)
         Me.tabs_funcs.Name = "tabs_funcs"
         Me.tabs_funcs.SelectedIndex = 0
-        Me.tabs_funcs.Size = New System.Drawing.Size(1174, 814)
+        Me.tabs_funcs.Size = New System.Drawing.Size(1008, 729)
         Me.tabs_funcs.TabIndex = 5
+        Me.tabs_funcs.Visible = False
         '
         'mindb_tab
         '
@@ -61,7 +67,7 @@ Partial Class FunctionsForm
         Me.mindb_tab.Location = New System.Drawing.Point(4, 30)
         Me.mindb_tab.Name = "mindb_tab"
         Me.mindb_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.mindb_tab.Size = New System.Drawing.Size(1166, 780)
+        Me.mindb_tab.Size = New System.Drawing.Size(1000, 695)
         Me.mindb_tab.TabIndex = 0
         Me.mindb_tab.Text = "Miniminzed Database"
         Me.mindb_tab.UseVisualStyleBackColor = True
@@ -70,13 +76,12 @@ Partial Class FunctionsForm
         '
         Me.dGView.AllowUserToAddRows = False
         Me.dGView.AllowUserToDeleteRows = False
-        Me.dGView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dGView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dGView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dGView.Location = New System.Drawing.Point(3, 3)
         Me.dGView.Name = "dGView"
         Me.dGView.ReadOnly = True
-        Me.dGView.Size = New System.Drawing.Size(1160, 774)
+        Me.dGView.Size = New System.Drawing.Size(994, 689)
         Me.dGView.TabIndex = 5
         '
         'rules_tab
@@ -137,25 +142,55 @@ Partial Class FunctionsForm
         '
         'dep_chart
         '
-        ChartArea2.AxisX.LabelStyle.Enabled = False
-        ChartArea2.Name = "ChartArea1"
-        Me.dep_chart.ChartAreas.Add(ChartArea2)
+        ChartArea3.AxisX.LabelStyle.Enabled = False
+        ChartArea3.Name = "ChartArea1"
+        Me.dep_chart.ChartAreas.Add(ChartArea3)
         Me.dep_chart.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend2.Name = "Legend1"
-        Me.dep_chart.Legends.Add(Legend2)
+        Legend3.Name = "Legend1"
+        Me.dep_chart.Legends.Add(Legend3)
         Me.dep_chart.Location = New System.Drawing.Point(3, 3)
         Me.dep_chart.Name = "dep_chart"
         Me.dep_chart.Size = New System.Drawing.Size(1160, 782)
         Me.dep_chart.TabIndex = 0
         Me.dep_chart.Text = "Dependency Chart"
         '
+        'worker
+        '
+        Me.worker.WorkerReportsProgress = True
+        '
+        'resp_progress
+        '
+        Me.resp_progress.Location = New System.Drawing.Point(5, 15)
+        Me.resp_progress.Name = "resp_progress"
+        Me.resp_progress.Size = New System.Drawing.Size(386, 23)
+        Me.resp_progress.Style = System.Windows.Forms.ProgressBarStyle.Marquee
+        Me.resp_progress.TabIndex = 7
+        '
+        'label_progress
+        '
+        Me.label_progress.Location = New System.Drawing.Point(5, 47)
+        Me.label_progress.Name = "label_progress"
+        Me.label_progress.Size = New System.Drawing.Size(386, 33)
+        Me.label_progress.TabIndex = 8
+        Me.label_progress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'progress_panel
+        '
+        Me.progress_panel.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.progress_panel.Controls.Add(Me.label_progress)
+        Me.progress_panel.Controls.Add(Me.resp_progress)
+        Me.progress_panel.Location = New System.Drawing.Point(300, 300)
+        Me.progress_panel.Name = "progress_panel"
+        Me.progress_panel.Size = New System.Drawing.Size(396, 106)
+        Me.progress_panel.TabIndex = 9
+        '
         'FunctionsForm
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(1174, 814)
+        Me.ClientSize = New System.Drawing.Size(1008, 729)
+        Me.Controls.Add(Me.progress_panel)
         Me.Controls.Add(Me.tabs_funcs)
         Me.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Location = New System.Drawing.Point(100, 100)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "FunctionsForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -166,6 +201,7 @@ Partial Class FunctionsForm
         Me.rules_tab.ResumeLayout(False)
         Me.depchart_tab.ResumeLayout(False)
         CType(Me.dep_chart, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.progress_panel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -180,4 +216,8 @@ Partial Class FunctionsForm
     Friend WithEvents dep_chart As DataVisualization.Charting.Chart
     Friend WithEvents acccol As ColumnHeader
     Friend WithEvents mincol As ColumnHeader
+    Friend WithEvents worker As System.ComponentModel.BackgroundWorker
+    Friend WithEvents label_progress As Label
+    Friend WithEvents resp_progress As ProgressBar
+    Friend WithEvents progress_panel As Panel
 End Class

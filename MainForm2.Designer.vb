@@ -120,7 +120,6 @@ Partial Class MainForm2
         '
         Me.train_view.AllowUserToAddRows = False
         Me.train_view.AllowUserToDeleteRows = False
-        Me.train_view.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.train_view.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.train_view.Dock = System.Windows.Forms.DockStyle.Fill
         Me.train_view.Location = New System.Drawing.Point(0, 32)
@@ -155,7 +154,6 @@ Partial Class MainForm2
         '
         Me.test_view.AllowUserToAddRows = False
         Me.test_view.AllowUserToDeleteRows = False
-        Me.test_view.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.test_view.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.test_view.Dock = System.Windows.Forms.DockStyle.Fill
         Me.test_view.Location = New System.Drawing.Point(0, 32)
