@@ -44,6 +44,7 @@ Partial Class MainForm2
         '
         'odb_btn
         '
+        Me.odb_btn.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.odb_btn.Font = New System.Drawing.Font("Segoe UI", 32.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.odb_btn.Location = New System.Drawing.Point(192, 304)
         Me.odb_btn.Name = "odb_btn"
@@ -64,6 +65,7 @@ Partial Class MainForm2
         '
         'cont_btn
         '
+        Me.cont_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cont_btn.Location = New System.Drawing.Point(824, 15)
         Me.cont_btn.Name = "cont_btn"
         Me.cont_btn.Size = New System.Drawing.Size(172, 37)
@@ -73,6 +75,7 @@ Partial Class MainForm2
         '
         'exit_btn
         '
+        Me.exit_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.exit_btn.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.exit_btn.Location = New System.Drawing.Point(12, 15)
         Me.exit_btn.Name = "exit_btn"
@@ -107,6 +110,7 @@ Partial Class MainForm2
         '
         'chng_db
         '
+        Me.chng_db.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chng_db.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chng_db.Location = New System.Drawing.Point(880, 0)
         Me.chng_db.Name = "chng_db"
@@ -141,8 +145,9 @@ Partial Class MainForm2
         '
         'chng_db2
         '
+        Me.chng_db2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chng_db2.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chng_db2.Location = New System.Drawing.Point(0, -1)
+        Me.chng_db2.Location = New System.Drawing.Point(880, -1)
         Me.chng_db2.Name = "chng_db2"
         Me.chng_db2.Size = New System.Drawing.Size(128, 32)
         Me.chng_db2.TabIndex = 4
@@ -168,8 +173,7 @@ Partial Class MainForm2
         Me.test_label.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.test_label.Location = New System.Drawing.Point(0, 0)
         Me.test_label.Name = "test_label"
-        Me.test_label.Padding = New System.Windows.Forms.Padding(0, 0, 100, 0)
-        Me.test_label.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.test_label.Padding = New System.Windows.Forms.Padding(100, 0, 0, 0)
         Me.test_label.Size = New System.Drawing.Size(1008, 32)
         Me.test_label.TabIndex = 1
         Me.test_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -187,7 +191,6 @@ Partial Class MainForm2
         Me.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.MaximizeBox = False
         Me.Name = "MainForm2"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Database Minimization using SIDE Algorithm"

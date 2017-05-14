@@ -22,8 +22,8 @@ Partial Class FunctionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.tabs_funcs = New System.Windows.Forms.TabControl()
         Me.mindb_tab = New System.Windows.Forms.TabPage()
         Me.dGView = New System.Windows.Forms.DataGridView()
@@ -87,10 +87,10 @@ Partial Class FunctionsForm
         'rules_tab
         '
         Me.rules_tab.Controls.Add(Me.rlist)
-        Me.rules_tab.Location = New System.Drawing.Point(4, 22)
+        Me.rules_tab.Location = New System.Drawing.Point(4, 30)
         Me.rules_tab.Name = "rules_tab"
         Me.rules_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.rules_tab.Size = New System.Drawing.Size(1166, 788)
+        Me.rules_tab.Size = New System.Drawing.Size(1000, 695)
         Me.rules_tab.TabIndex = 1
         Me.rules_tab.Text = "Rules"
         Me.rules_tab.UseVisualStyleBackColor = True
@@ -103,7 +103,7 @@ Partial Class FunctionsForm
         Me.rlist.GridLines = True
         Me.rlist.Location = New System.Drawing.Point(3, 3)
         Me.rlist.Name = "rlist"
-        Me.rlist.Size = New System.Drawing.Size(1160, 782)
+        Me.rlist.Size = New System.Drawing.Size(994, 689)
         Me.rlist.TabIndex = 1
         Me.rlist.UseCompatibleStateImageBehavior = False
         Me.rlist.View = System.Windows.Forms.View.Details
@@ -116,7 +116,7 @@ Partial Class FunctionsForm
         'rulcol
         '
         Me.rulcol.Text = "RULES"
-        Me.rulcol.Width = 800
+        Me.rulcol.Width = 604
         '
         'acccol
         '
@@ -127,30 +127,31 @@ Partial Class FunctionsForm
         'mincol
         '
         Me.mincol.Text = "% MINIMIZATION"
+        Me.mincol.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.mincol.Width = 150
         '
         'depchart_tab
         '
         Me.depchart_tab.Controls.Add(Me.dep_chart)
-        Me.depchart_tab.Location = New System.Drawing.Point(4, 22)
+        Me.depchart_tab.Location = New System.Drawing.Point(4, 30)
         Me.depchart_tab.Name = "depchart_tab"
         Me.depchart_tab.Padding = New System.Windows.Forms.Padding(3)
-        Me.depchart_tab.Size = New System.Drawing.Size(1166, 788)
+        Me.depchart_tab.Size = New System.Drawing.Size(1000, 695)
         Me.depchart_tab.TabIndex = 2
         Me.depchart_tab.Text = "Dependency Chart"
         Me.depchart_tab.UseVisualStyleBackColor = True
         '
         'dep_chart
         '
-        ChartArea3.AxisX.LabelStyle.Enabled = False
-        ChartArea3.Name = "ChartArea1"
-        Me.dep_chart.ChartAreas.Add(ChartArea3)
+        ChartArea2.AxisX.LabelStyle.Enabled = False
+        ChartArea2.Name = "ChartArea1"
+        Me.dep_chart.ChartAreas.Add(ChartArea2)
         Me.dep_chart.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend3.Name = "Legend1"
-        Me.dep_chart.Legends.Add(Legend3)
+        Legend2.Name = "Legend1"
+        Me.dep_chart.Legends.Add(Legend2)
         Me.dep_chart.Location = New System.Drawing.Point(3, 3)
         Me.dep_chart.Name = "dep_chart"
-        Me.dep_chart.Size = New System.Drawing.Size(1160, 782)
+        Me.dep_chart.Size = New System.Drawing.Size(994, 689)
         Me.dep_chart.TabIndex = 0
         Me.dep_chart.Text = "Dependency Chart"
         '
@@ -194,7 +195,7 @@ Partial Class FunctionsForm
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "FunctionsForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "FunctionsForm"
+        Me.Text = "Results View"
         Me.tabs_funcs.ResumeLayout(False)
         Me.mindb_tab.ResumeLayout(False)
         CType(Me.dGView, System.ComponentModel.ISupportInitialize).EndInit()

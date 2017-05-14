@@ -115,7 +115,7 @@ Partial Class MainForm
         '
         'cancel_btn
         '
-        Me.cancel_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.cancel_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cancel_btn.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.cancel_btn.Location = New System.Drawing.Point(218, 520)
         Me.cancel_btn.Name = "cancel_btn"
@@ -140,7 +140,7 @@ Partial Class MainForm
         Me.MinimumSize = New System.Drawing.Size(400, 300)
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Open Database"
+        Me.Text = "Select Database"
         CType(Me.table_view, System.ComponentModel.ISupportInitialize).EndInit()
         Me.main_panel.ResumeLayout(False)
         Me.ResumeLayout(False)
