@@ -70,9 +70,9 @@
                                             csets.Add(combined)
                                         End If
                                     End Sub)
-        'Dim p = csets.Select(Function(y) y.indices.Select(Function(z) >= z + 1).GetRules(table))
-        'Dim v = p.columnDependencies()
-
+        If (csets.Count = 0) Then
+            Throw New ReductException()
+        End If
         csets = csets.OrderByDescending(Function(x) x.indices.Count).ToList
         min = tbl.DefaultView.ToTable(tbl.TableName, False, csets.First().indices.Select(Function(x) x + 1) _
                 .Concat(New Integer() {0, tbl.Columns.Count - 1}).OrderBy(Function(x) x) _
@@ -88,7 +88,9 @@
 
         Return min
     End Function
-
+    Private Class ReductException
+        Inherits Exception
+    End Class
     Private Sub FunctionsForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         tabs_funcs.Visible = False
         progress_panel.Visible = True
@@ -194,7 +196,11 @@
 
     Private Sub worker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles worker.DoWork
         worker.ReportProgress(0, "Minimizing Train Set...")
-        mintable = minimize(tables.train, rules_count)
+        Try
+            mintable = minimize(tables.train, rules_count)
+        Catch r As ReductException
+            Throw r
+        End Try
         worker.ReportProgress(40, "Calculating accuracy...")
         accuracy = getAccuracy(RULES, tables.test)
         worker.ReportProgress(80, "Calculating dependencies...")
@@ -203,6 +209,11 @@
     End Sub
 
     Private Sub worker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles worker.RunWorkerCompleted
+        If (TypeOf (e.Error) Is ReductException) Then
+            MsgBox("None of the combined Reducts have complete dependency! Unable to minimize table.", vbCritical And vbOKOnly, "Invalid Table")
+            Me.Hide()
+            Exit Sub
+        End If
         SetVals()
     End Sub
 
